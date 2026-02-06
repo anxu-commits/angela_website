@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angela — The Blue Side of Springfield</title>
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-deep: #0a1628;
+    --blue-dark: #0f2444;
+    --blue-mid: #1a3a6b;
+    --blue-bright: #2e6fff;
+    --blue-light: #5b9aff;
+    --blue-pale: #a8cbff;
+    --blue-glow: #4d8bff;
+    --yellow-accent: #ffe14d;
+    --white: #eaf2ff;
+    --bg: #060e1c;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  ::selection {
+    background: var(--blue-bright);
+    color: var(--bg);
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(6, 14, 28, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(46, 111, 255, 0.1);
+  }
+
+  nav .logo {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.4rem;
+    color: var(--blue-light);
+    letter-spacing: 1px;
+  }
+
+  nav .logo span { color: var(--yellow-accent); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul li a {
+    color: var(--blue-pale);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav ul li a:hover { color: var(--yellow-accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(46,111,255,0.15) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.04;
+  }
+
+  .cloud {
+    position: absolute;
+    background: var(--blue-light);
+    border-radius: 50%;
+    animation: float-cloud linear infinite;
+  }
+
+  @keyframes float-cloud {
+    from { transform: translateX(-200px); }
+    to { transform: translateX(calc(100vw + 200px)); }
+  }
+
+  .hero h1 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.1;
+    color: var(--blue-light);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s ease-out;
+  }
+
+  .hero h1 .yellow { color: var(--yellow-accent); }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--blue-pale);
+    opacity: 0.7;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease-out 0.2s both;
+  }
+
+  .hero .tagline {
+    font-size: 1.3rem;
+    color: var(--blue-pale);
+    max-width: 500px;
+    line-height: 1.6;
+    animation: fadeUp 1s ease-out 0.4s both;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeUp 1s ease-out 0.6s both;
+  }
+
+  .scroll-indicator span {
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--blue-pale);
+    opacity: 0.4;
+  }
+
+  .scroll-indicator .line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--blue-bright), transparent);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue-bright);
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .section-title {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    color: var(--blue-light);
+    margin-bottom: 3rem;
+  }
+
+  .section-title .yellow { color: var(--yellow-accent); }
+
+  /* ─── CHARACTER CARDS ─── */
+  .char-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .char-card {
+    background: linear-gradient(135deg, rgba(15,36,68,0.8), rgba(10,22,40,0.9));
+    border: 1px solid rgba(46,111,255,0.15);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .char-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--blue-bright), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .char-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(46,111,255,0.4);
+    box-shadow: 0 20px 60px rgba(46,111,255,0.1);
+  }
+
+  .char-card:hover::before { opacity: 1; }
+
+  .char-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .char-card h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.3rem;
+    color: var(--blue-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .char-card .role {
+    font-size: 0.8rem;
+    color: var(--yellow-accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+  }
+
+  .char-card p {
+    font-size: 0.95rem;
+    color: var(--blue-pale);
+    line-height: 1.7;
+    opacity: 0.75;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-item {
+    padding: 1.5rem;
+    background: rgba(15,36,68,0.5);
+    border: 1px solid rgba(46,111,255,0.1);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .skill-item:hover {
+    border-color: var(--blue-bright);
+    background: rgba(15,36,68,0.8);
+  }
+
+  .skill-item .skill-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+
+  .skill-item h4 {
+    font-size: 0.95rem;
+    color: var(--blue-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .skill-item .skill-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(46,111,255,0.15);
+    border-radius: 2px;
+    margin-top: 0.8rem;
+    overflow: hidden;
+  }
+
+  .skill-item .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue-bright), var(--yellow-accent));
+    border-radius: 2px;
+    transition: width 1.5s ease-out;
+  }
+
+  /* ─── GAMES SECTION ─── */
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .game-container {
+    background: linear-gradient(135deg, rgba(15,36,68,0.9), rgba(10,22,40,0.95));
+    border: 1px solid rgba(46,111,255,0.2);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .game-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(46,111,255,0.1);
+  }
+
+  .game-header h3 {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 1.1rem;
+    color: var(--blue-light);
+  }
+
+  .game-score {
+    font-size: 0.85rem;
+    color: var(--yellow-accent);
+    font-weight: 700;
+  }
+
+  .game-body {
+    padding: 1.5rem;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Donut Catcher Game */
+  #donut-canvas {
+    border-radius: 8px;
+    background: linear-gradient(180deg, #0a1628, #0f2444);
+    cursor: none;
+    display: block;
+  }
+
+  /* Trivia Game */
+  .trivia-question {
+    font-size: 1.1rem;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .trivia-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    width: 100%;
+  }
+
+  .trivia-btn {
+    background: rgba(46,111,255,0.1);
+    border: 1px solid rgba(46,111,255,0.25);
+    color: var(--blue-pale);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .trivia-btn:hover {
+    background: rgba(46,111,255,0.25);
+    border-color: var(--blue-bright);
+    color: var(--white);
+  }
+
+  .trivia-btn.correct {
+    background: rgba(46,111,255,0.4);
+    border-color: var(--blue-bright);
+    color: var(--white);
+  }
+
+  .trivia-btn.wrong {
+    background: rgba(255, 80, 80, 0.2);
+    border-color: rgba(255, 80, 80, 0.4);
+    color: #ff8888;
+  }
+
+  .trivia-status {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: var(--blue-pale);
+    opacity: 0.6;
+  }
+
+  /* Memory Game */
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .memory-card {
+    aspect-ratio: 1;
+    background: rgba(46,111,255,0.15);
+    border: 1px solid rgba(46,111,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    user-select: none;
+  }
+
+  .memory-card:hover { border-color: var(--blue-bright); }
+
+  .memory-card.flipped {
+    background: rgba(46,111,255,0.3);
+    border-color: var(--blue-bright);
+  }
+
+  .memory-card.matched {
+    background: rgba(46,111,255,0.4);
+    border-color: var(--yellow-accent);
+    opacity: 0.7;
+  }
+
+  .game-btn {
+    margin-top: 1rem;
+    background: var(--blue-bright);
+    color: var(--bg);
+    border: none;
+    padding: 0.7rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .game-btn:hover {
+    background: var(--yellow-accent);
+    transform: scale(1.03);
+  }
+
+  /* ─── QUOTE ─── */
+  .quote-section {
+    text-align: center;
+    padding: 8rem 2rem;
+    position: relative;
+  }
+
+  .quote-section blockquote {
+    font-family: 'Permanent Marker', cursive;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    color: var(--blue-light);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .quote-section .quote-attr {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--yellow-accent);
+    opacity: 0.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid rgba(46,111,255,0.1);
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--blue-pale);
+    opacity: 0.4;
+    letter-spacing: 2px;
+  }
+
+  footer p span { color: var(--yellow-accent); }
+
+  /* ─── DONUT FLOAT ANIMATION ─── */
+  .floating-donut {
+    position: fixed;
+    font-size: 1.2rem;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.06;
+    animation: donut-drift linear infinite;
+  }
+
+  @keyframes donut-drift {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-100px) rotate(360deg); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 1.2rem; }
+    nav ul li a { font-size: 0.75rem; }
+    section { padding: 4rem 1.5rem; }
+    .trivia-options { grid-template-columns: 1fr; }
+    .memory-grid { max-width: 240px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating background donuts -->
+<div class="floating-donut" style="left:5%; animation-duration:25s; animation-delay:0s;">🍩</div>
+<div class="floating-donut" style="left:20%; animation-duration:30s; animation-delay:5s;">🍩</div>
+<div class="floating-donut" style="left:45%; animation-duration:22s; animation-delay:2s;">🍩</div>
+<div class="floating-donut" style="left:70%; animation-duration:28s; animation-delay:8s;">🍩</div>
+<div class="floating-donut" style="left:88%; animation-duration:26s; animation-delay:3s;">🍩</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">angela<span>.</span></div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Hi, I'm <span class="yellow">Angela</span></h1>
+  <p class="subtitle">Welcome to Blue Springfield</p>
+  <p class="tagline">A personal universe where everything's a little more blue, a lot more fun, and donuts are always on the menu.</p>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="line"></div>
+  </div>
+</div>
+
+<!-- ABOUT — Character Cards -->
+<section id="about">
+  <p class="section-label">// Who am I?</p>
+  <h2 class="section-title">Meet the many sides of <span class="yellow">Angela</span></h2>
+  <div class="char-grid">
+    <div class="char-card">
+      <div class="char-icon">🧠</div>
+      <h3>The Lisa Side</h3>
+      <div class="role">Creative Intellectual</div>
+      <p>Endlessly curious and always learning. Whether it's diving into a new book, exploring creative projects, or championing causes that matter — Angela's inner Lisa never stops reaching for more.</p>
+    </div>
+    <div class="char-card">
+      <div class="char-icon">🍩</div>
+      <h3>The Homer Side</h3>
+      <div class="role">Life Enthusiast</div>
+      <p>Unapologetically loves the simple joys. Comfort food, lazy weekends, binge-watching shows until 3am, and finding happiness in the little things. D'oh moments included — and embraced.</p>
+    </div>
+    <div class="char-card">
+      <div class="char-icon">⚡</div>
+      <h3>The Bart Side</h3>
+      <div class="role">Fearless Creative</div>
+      <p>The rule-breaker and risk-taker. Angela's rebellious streak drives bold ideas, unconventional solutions, and a refusal to do things "the boring way." Eat my shorts, mediocrity.</p>
+    </div>
+    <div class="char-card">
+      <div class="char-icon">💙</div>
+      <h3>The Marge Side</h3>
+      <div class="role">Heart & Backbone</div>
+      <p>The glue that holds everything together. Patient, strong, deeply caring, and somehow always keeping it all running. Angela's Marge side brings warmth, organization, and love to every room.</p>
+    </div>
+    <div class="char-card">
+      <div class="char-icon">🍼</div>
+      <h3>The Maggie Side</h3>
+      <div class="role">Silent Observer</div>
+      <p>Quietly watching, always absorbing. Angela's observant nature catches details others miss. Underestimated? Maybe. But still the one who saved the day when nobody was looking.</p>
+    </div>
+    <div class="char-card">
+      <div class="char-icon">☢️</div>
+      <h3>The Burns Side</h3>
+      <div class="role">Ambitious Strategist</div>
+      <p>When it's time to get serious, Angela's inner Mr. Burns takes charge — strategic, focused, and ruthlessly efficient. Except, you know, with way more empathy and fewer hounds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">// What I do</p>
+  <h2 class="section-title">Springfield <span class="yellow">Skill Tree</span></h2>
+  <div class="skills-container">
+    <div class="skill-item">
+      <div class="skill-icon">🎨</div>
+      <h4>Design & Creativity</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">💻</div>
+      <h4>Problem Solving</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🎵</div>
+      <h4>Saxophone Vibes</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">📚</div>
+      <h4>Research & Learning</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🗣️</div>
+      <h4>Communication</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+    </div>
+    <div class="skill-item">
+      <div class="skill-icon">🍩</div>
+      <h4>Donut Appreciation</h4>
+      <div class="skill-bar"><div class="skill-fill" style="width:100%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <p class="section-label">// Let's play</p>
+  <h2 class="section-title">Springfield <span class="yellow">Arcade</span></h2>
+  <div class="games-grid">
+
+    <!-- Game 1: Donut Catcher -->
+    <div class="game-container">
+      <div class="game-header">
+        <h3>🍩 Donut Catcher</h3>
+        <div class="game-score" id="donut-score">Score: 0</div>
+      </div>
+      <div class="game-body">
+        <canvas id="donut-canvas" width="300" height="260"></canvas>
+        <button class="game-btn" id="donut-start">Start Game</button>
+      </div>
+    </div>
+
+    <!-- Game 2: Simpsons Trivia -->
+    <div class="game-container">
+      <div class="game-header">
+        <h3>🧠 Blue Trivia</h3>
+        <div class="game-score" id="trivia-score">0 / 0</div>
+      </div>
+      <div class="game-body" id="trivia-body">
+        <div class="trivia-question" id="trivia-q">Test your Simpsons knowledge!</div>
+        <div class="trivia-options" id="trivia-options"></div>
+        <button class="game-btn" id="trivia-start">Start Trivia</button>
+        <div class="trivia-status" id="trivia-status"></div>
+      </div>
+    </div>
+
+    <!-- Game 3: Memory Match -->
+    <div class="game-container">
+      <div class="game-header">
+        <h3>🃏 Springfield Memory</h3>
+        <div class="game-score" id="memory-score">Moves: 0</div>
+      </div>
+      <div class="game-body">
+        <div class="memory-grid" id="memory-grid"></div>
+        <button class="game-btn" id="memory-start">New Game</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section" id="contact">
+  <blockquote>"Trying is the first step towards failure."<br>— And that's okay.</blockquote>
+  <p class="quote-attr">— Angela, channeling her inner Homer (in blue)</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>Made with 💙 by <span>Angela</span> · Blue Springfield · ©2026</p>
+</footer>
+
+<script>
+// ═══════════════════════════════════════
+// DONUT CATCHER GAME
+// ═══════════════════════════════════════
+(() => {
+  const canvas = document.getElementById('donut-canvas');
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.getElementById('donut-score');
+  const startBtn = document.getElementById('donut-start');
+  let donuts = [], score = 0, running = false, paddle = { x: 130, w: 60 };
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    paddle.x = ((e.clientX - rect.left) / rect.width) * canvas.width - paddle.w / 2;
+    paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+  });
+
+  canvas.addEventListener('touchmove', e => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    paddle.x = ((touch.clientX - rect.left) / rect.width) * canvas.width - paddle.w / 2;
+    paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+  }, { passive: false });
+
+  function spawnDonut() {
+    donuts.push({ x: Math.random() * (canvas.width - 20), y: -20, speed: 1.5 + Math.random() * 2 });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Paddle
+    ctx.fillStyle = '#2e6fff';
+    ctx.beginPath();
+    ctx.roundRect(paddle.x, canvas.height - 18, paddle.w, 10, 5);
+    ctx.fill();
+    // Glow
+    ctx.shadowColor = '#4d8bff';
+    ctx.shadowBlur = 12;
+    ctx.fillStyle = '#5b9aff';
+    ctx.beginPath();
+    ctx.roundRect(paddle.x + 5, canvas.height - 16, paddle.w - 10, 6, 3);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    // Donuts
+    ctx.font = '20px serif';
+    donuts.forEach(d => ctx.fillText('🍩', d.x, d.y));
+  }
+
+  function update() {
+    donuts.forEach(d => d.y += d.speed);
+    donuts = donuts.filter(d => {
+      if (d.y > canvas.height - 25 && d.x + 15 > paddle.x && d.x < paddle.x + paddle.w) {
+        score++;
+        scoreEl.textContent = `Score: ${score}`;
+        return false;
+      }
+      return d.y < canvas.height + 20;
+    });
+  }
+
+  let frame = 0;
+  function loop() {
+    if (!running) return;
+    frame++;
+    if (frame % 40 === 0) spawnDonut();
+    update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  startBtn.addEventListener('click', () => {
+    score = 0; donuts = []; frame = 0; running = true;
+    scoreEl.textContent = 'Score: 0';
+    startBtn.textContent = 'Restart';
+    loop();
+  });
+})();
+
+// ═══════════════════════════════════════
+// TRIVIA GAME
+// ═══════════════════════════════════════
+(() => {
+  const questions = [
+    { q: "What is Homer's favorite food?", a: ["Donuts", "Pizza", "Burgers", "Hotdogs"], correct: 0 },
+    { q: "What instrument does Lisa play?", a: ["Trumpet", "Flute", "Saxophone", "Violin"], correct: 2 },
+    { q: "What's the name of the Simpsons' neighbor?", a: ["Ned Flanders", "Lenny", "Carl", "Moe"], correct: 0 },
+    { q: "What is Bart's catchphrase?", a: ["D'oh!", "Ay Caramba!", "Excellent", "Cowabunga"], correct: 1 },
+    { q: "Where does Homer work?", a: ["Hospital", "School", "Nuclear Plant", "Bar"], correct: 2 },
+    { q: "What's the name of the bar Homer frequents?", a: ["Joe's", "Moe's Tavern", "Flaming Moe's", "Duff Bar"], correct: 1 },
+    { q: "What is Mr. Burns' first name?", a: ["Charles", "Richard", "William", "Montgomery"], correct: 3 },
+    { q: "What color is Marge's hair?", a: ["Yellow", "Blue", "Purple", "Green"], correct: 1 },
+    { q: "What's the name of the Simpsons' dog?", a: ["Rex", "Buddy", "Santa's Little Helper", "Lassie"], correct: 2 },
+    { q: "What town do the Simpsons live in?", a: ["Shelbyville", "Springfield", "Capital City", "Ogdenville"], correct: 1 },
+  ];
+
+  let current = 0, right = 0, total = 0, pool = [];
+  const qEl = document.getElementById('trivia-q');
+  const optsEl = document.getElementById('trivia-options');
+  const scoreEl = document.getElementById('trivia-score');
+  const statusEl = document.getElementById('trivia-status');
+  const startBtn = document.getElementById('trivia-start');
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function showQuestion() {
+    if (current >= pool.length) {
+      qEl.textContent = `All done! You got ${right} out of ${total} right!`;
+      optsEl.innerHTML = '';
+      startBtn.textContent = 'Play Again';
+      startBtn.style.display = 'block';
+      statusEl.textContent = right === total ? '🏆 Perfect score!' : right >= total/2 ? '⭐ Nice work!' : '💪 Keep trying!';
+      return;
+    }
+    const q = pool[current];
+    qEl.textContent = q.q;
+    optsEl.innerHTML = '';
+    statusEl.textContent = `Question ${current + 1} of ${pool.length}`;
+    q.a.forEach((ans, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'trivia-btn';
+      btn.textContent = ans;
+      btn.addEventListener('click', () => {
+        total++;
+        document.querySelectorAll('.trivia-btn').forEach((b, j) => {
+          b.style.pointerEvents = 'none';
+          if (j === q.correct) b.classList.add('correct');
+          else if (j === i && i !== q.correct) b.classList.add('wrong');
+        });
+        if (i === q.correct) right++;
+        scoreEl.textContent = `${right} / ${total}`;
+        setTimeout(() => { current++; showQuestion(); }, 1000);
+      });
+      optsEl.appendChild(btn);
+    });
+  }
+
+  startBtn.addEventListener('click', () => {
+    pool = shuffle(questions).slice(0, 5);
+    current = 0; right = 0; total = 0;
+    scoreEl.textContent = '0 / 0';
+    startBtn.style.display = 'none';
+    showQuestion();
+  });
+})();
+
+// ═══════════════════════════════════════
+// MEMORY MATCH GAME
+// ═══════════════════════════════════════
+(() => {
+  const emojis = ['🍩', '🎷', '☢️', '🍺', '⚡', '💙', '📺', '🛹'];
+  const grid = document.getElementById('memory-grid');
+  const scoreEl = document.getElementById('memory-score');
+  const startBtn = document.getElementById('memory-start');
+  let cards = [], flipped = [], matched = 0, moves = 0, locked = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function initGame() {
+    const pairs = shuffle(emojis).slice(0, 8);
+    cards = shuffle([...pairs, ...pairs]);
+    grid.innerHTML = '';
+    flipped = []; matched = 0; moves = 0; locked = false;
+    scoreEl.textContent = 'Moves: 0';
+    cards.forEach((emoji, i) => {
+      const card = document.createElement('div');
+      card.className = 'memory-card';
+      card.dataset.index = i;
+      card.dataset.emoji = emoji;
+      card.textContent = '?';
+      card.style.color = 'rgba(91,154,255,0.3)';
+      card.addEventListener('click', () => flipCard(card, i));
+      grid.appendChild(card);
+    });
+  }
+
+  function flipCard(card, index) {
+    if (locked || flipped.includes(index) || card.classList.contains('matched')) return;
+    card.textContent = cards[index];
+    card.style.color = '';
+    card.classList.add('flipped');
+    flipped.push(index);
+
+    if (flipped.length === 2) {
+      moves++;
+      scoreEl.textContent = `Moves: ${moves}`;
+      locked = true;
+      const [a, b] = flipped;
+      if (cards[a] === cards[b]) {
+        grid.children[a].classList.add('matched');
+        grid.children[b].classList.add('matched');
+        matched += 2;
+        flipped = [];
+        locked = false;
+        if (matched === cards.length) {
+          scoreEl.textContent = `Done in ${moves} moves! 🎉`;
+        }
+      } else {
+        setTimeout(() => {
+          grid.children[a].textContent = '?';
+          grid.children[a].style.color = 'rgba(91,154,255,0.3)';
+          grid.children[a].classList.remove('flipped');
+          grid.children[b].textContent = '?';
+          grid.children[b].style.color = 'rgba(91,154,255,0.3)';
+          grid.children[b].classList.remove('flipped');
+          flipped = [];
+          locked = false;
+        }, 700);
+      }
+    }
+  }
+
+  startBtn.addEventListener('click', initGame);
+  initGame();
+})();
+
+// ═══════════════════════════════════════
+// INTERSECTION OBSERVER FOR SKILL BARS
+// ═══════════════════════════════════════
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.style.width; // trigger reflow
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+document.querySelectorAll('.skills-container').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
